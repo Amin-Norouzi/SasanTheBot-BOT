@@ -1,7 +1,7 @@
 package dev.aminnorouzi.telegrambot.keyboard.impl;
 
 import dev.aminnorouzi.telegrambot.keyboard.Keyboard;
-import dev.aminnorouzi.telegrambot.keyboard.KeyboardButton;
+import dev.aminnorouzi.telegrambot.model.bot.Button;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
@@ -17,18 +17,16 @@ public class AccountKeyboard implements Keyboard {
                 .keyboard(build(
                         true,
                         generate(buttons().get(0)),
-                        generate(buttons().get(1)),
-                        generate(buttons().get(2))
+                        generate(buttons().get(1))
                 ))
                 .build();
     }
 
     @Override
-    public List<KeyboardButton> buttons() {
+    public List<Button> buttons() {
         return List.of(
-                KeyboardButton.MOVIES,
-                KeyboardButton.DOWNLOADS,
-                KeyboardButton.CONNECT
+                Button.INFO,
+                Button.DOWNLOADS
         );
     }
 }

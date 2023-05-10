@@ -1,5 +1,6 @@
 package dev.aminnorouzi.telegrambot.keyboard;
 
+import dev.aminnorouzi.telegrambot.model.bot.Button;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -12,7 +13,7 @@ public interface Keyboard {
 
     ReplyKeyboard get(Object object);
 
-    List<KeyboardButton> buttons();
+    List<Button> buttons();
 
     default ReplyKeyboard get() {
         return get(null);
@@ -37,7 +38,7 @@ public interface Keyboard {
         }
     }
 
-    default InlineKeyboardButton generate(KeyboardButton button) {
+    default InlineKeyboardButton generate(Button button) {
         InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
         inlineKeyboardButton.setText(button.getText());
 
