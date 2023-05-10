@@ -10,4 +10,6 @@ public interface Handler {
     boolean supports(Update update);
 
     void handle(Update update, Bot bot);
+
+    boolean validate(String input, Object object);
 }

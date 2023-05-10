@@ -1,7 +1,9 @@
 package dev.aminnorouzi.telegrambot.config;
 
-import dev.aminnorouzi.telegrambot.handler.*;
-import dev.aminnorouzi.telegrambot.handler.impl.*;
+import dev.aminnorouzi.telegrambot.handler.Handler;
+import dev.aminnorouzi.telegrambot.handler.impl.CallbackHandler;
+import dev.aminnorouzi.telegrambot.handler.impl.InlineQueryHandler;
+import dev.aminnorouzi.telegrambot.handler.impl.MessageHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,28 +15,32 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class BotConfig {
 
-    private final HomeHandler homeHandler;
-    private final AccountHandler accountHandler;
-    private final ContactHandler contactHandler;
-    private final SearchHandler searchHandler;
-    private final DownloadHandler downloadHandler;
+    private final CallbackHandler callbackHandler;
+    private final MessageHandler messageHandler;
+    private final InlineQueryHandler inlineQueryHandler;
 
     @Value("${telegram.bot.token}")
-    private String token;
+    private String botToken;
+
+    @Value("${telegram.bot.username}")
+    private String botUsername;
 
     @Bean
-    public String botToken() {
-        return token;
+    public String token() {
+        return botToken;
+    }
+
+    @Bean
+    public String username() {
+        return botUsername;
     }
 
     @Bean
     public Set<Handler> handlers() {
         return Set.of(
-                homeHandler,
-                accountHandler,
-                contactHandler,
-                searchHandler,
-                downloadHandler
+                callbackHandler,
+                messageHandler,
+                inlineQueryHandler
         );
     }
 }
