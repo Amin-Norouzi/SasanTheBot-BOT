@@ -7,9 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Command {
 
-    START("start", new String[]{"/\\w{5}"}),
-    DOWNLOAD("download", new String[]{"/dl_\\d+", "/\\w{5}\\s\\d+"});
+    START("start", "/\\w{5}"),
+    DOWNLOAD("download", "/dl_\\w{1}\\d+");
 
     private final String name;
-    private final String[] patterns;
+    private final String pattern;
 }

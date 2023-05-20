@@ -5,7 +5,9 @@
 <br>
 <br>
 
-bot flow: v1.0
+## Bot v1.0 is available now!
+
+bot flow: v2.0
 - home stage (/start | /start?1234)
   - checks if user is logged in or not 
 
@@ -16,23 +18,23 @@ bot flow: v1.0
   
 
 - search stage (any message besides /start or /dl_1234)
-  - first sends a request to movie service the returns the result to user as a message
+  - first sends a request to search service the returns the result to user as a message
   - user can use download command here
 
 
 - download stage (/dl_1234)
-  - sends a movie info first then try to fetch download links an update the message 
+  - sends a search info first then try to fetch download links an update the message 
     - 0- it constantly updates message to inform user about download progress 
-    - 1- if user already has downloaded the movie, it just will return the download link else it also will add the download to use account 
+    - 1- if user already has downloaded the search, it just will return the download link else it also will add the download to use account 
     - 2- it cannot find any download links and just updates the message with a proper info
-  - user can add the movie to his/her account (NOT IN THIS VERSION)
-    - 1- if movie was not already added to user's library, it will be added and bot just returns a notification
-    - 2- or if the movies was already added to user's library then bot will return a error notification
+  - user can add the search to his/her account (NOT IN THIS VERSION)
+    - 1- if search was not already added to user's library, it will be added and bot just returns a notification
+    - 2- or if the searches was already added to user's library then bot will return a error notification
 
 
 - account/settings stage (callback-account)
   - returns user downloads in inline query mode
-  - returns user movies in inline query mode
+  - returns user searches in inline query mode
   - connects to moviestalker app (soon)
 
 
