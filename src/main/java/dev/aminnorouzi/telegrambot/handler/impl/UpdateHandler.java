@@ -16,9 +16,7 @@ public class UpdateHandler implements Handler {
 
     @Override
     public boolean supports(Update update) {
-        return (update.hasMessage() && update.getMessage().hasText()) ||
-                update.hasCallbackQuery() ||
-                update.hasInlineQuery();
+        return update.hasMessage() && update.getMessage().hasText();
     }
 
     @Override
@@ -27,10 +25,5 @@ public class UpdateHandler implements Handler {
                 .filter(handler -> handler.supports(update))
                 .findFirst()
                 .ifPresent(handler -> handler.handle(update, bot));
-    }
-
-    @Override
-    public boolean validate(String input, Object object) {
-        return false;
     }
 }
