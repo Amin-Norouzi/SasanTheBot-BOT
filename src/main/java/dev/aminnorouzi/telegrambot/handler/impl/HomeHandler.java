@@ -1,15 +1,13 @@
 package dev.aminnorouzi.telegrambot.handler.impl;
 
-import dev.aminnorouzi.telegrambot.client.UserClient;
 import dev.aminnorouzi.telegrambot.core.Bot;
 import dev.aminnorouzi.telegrambot.handler.Handler;
 import dev.aminnorouzi.telegrambot.model.bot.Command;
-import dev.aminnorouzi.telegrambot.model.user.User;
-import dev.aminnorouzi.telegrambot.util.StringUtil;
+import dev.aminnorouzi.telegrambot.service.AuthService;
+import dev.aminnorouzi.telegrambot.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -17,33 +15,19 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RequiredArgsConstructor
 public class HomeHandler implements Handler {
 
-    private final UserClient userClient;
-    private final StringUtil stringUtil;
+    private final AuthService authService;
+    private final HomeService homeService;
 
     @Override
     public boolean supports(Update update) {
-        Long userTgId = update.getMessage().getFrom().getId();
-        String text = update.getMessage().getText();
-
-        return text.matches(Command.START.getPattern()) &&
-                userClient.getByTelegramId(userTgId).isPresent();
+        return getText(update).matches(Command.START.getPattern()) &&
+                authService.isAuthenticated(getChatId(update));
     }
 
     @Override
     @SneakyThrows
     public void handle(Update update, Bot bot) {
-        Long tgId = update.getMessage().getFrom().getId();
-        User user = userClient.getByTelegramId(tgId).get();
-
-        String text = ("<b>Hi %s, I'm Sasan known as the bot. \uD83D\uDC4B\uD83C\uDFFB \nYou wanna download " +
-                "a movie/tv? Just say its name... I'm all ears.</b>")
-                .formatted(stringUtil.capitalize(user.getFullName()));
-
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(user.getTelegramId());
-        sendMessage.setText(text);
-        sendMessage.setParseMode(ParseMode.HTML);
-
+        SendMessage sendMessage = homeService.greet(getChatId(update));
         bot.execute(sendMessage);
     }
 }
